@@ -12,4 +12,16 @@ const commonLink = "https://gp-js-test.herokuapp.com/pizza/"
     return data.diet
   }
 
-  //query string = state.members.map(guest => guest.name).join(",").split(" ").join("%20"))
+  //query string = state.party.map(guest => guest.name).join(",").split(" ").join("%20"))
+
+  export const getCommonStateFunc = (arr, arr1) => {
+    let arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+      arr2.push({
+        name: arr[i].name,
+        eatsPizza: arr[i].eatsPizza,
+        isVegan: arr1[i].isVegan,
+      })
+    }
+    return arr2
+  }
