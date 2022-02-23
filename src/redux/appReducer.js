@@ -16,13 +16,13 @@ export const getFormInfo = (name, formInfo) => ({type: GET_FORM_INFO, name, form
 export const getGuestsData = () => async dispatch => {
   const response = await getDataGuests()
     dispatch(getGuests(response))
-    localStorage.setItem("state", {})
-    localStorage.state.setItem("party", response)
+    localStorage.Storage.setItem("state", {})
+    localStorage.Storage.state.setItem("party", response)
 }
 export const getDietData = (queryStr) => async dispatch => {
   const response = await getDataDiet(queryStr)
   dispatch(getDiet(response))
-  localStorage.state.setItem("diet", response)
+  localStorage.Storage.state.setItem("diet", response)
 }
 export const getCommonStateData = (party, diet) => async dispatch => {
   !party.length && !diet.length
@@ -30,16 +30,20 @@ export const getCommonStateData = (party, diet) => async dispatch => {
   : dispatch(getCommonState(getCommonStateFunc(party, diet)))
 }
 
+//initialState
+//!localStorage.Storage.state.commonState 
+//?
+//: initialState = localStorage.Storage.state
+
 //reducer
-let initialState
-!localStorage.state.commonState 
-? initialState = {
+let initialState = {
   party: [],
   diet: [],
   isFetched: false
 }
-: initialState = localStorage.state
 
+//initialize app
+//follow unfollow
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {

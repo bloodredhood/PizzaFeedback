@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const FeedbackForm = (props) => {
 
-  const {userId: urlName} = useParams() 
+  const {urlName} = useParams() 
 
   const phoneRef = useRef()
   const feedbackTextRef = useRef()
@@ -32,13 +32,22 @@ const FeedbackForm = (props) => {
   return (
     <>
       {
-        Object.keys(props.state.commonState.find(guest => guest.name === urlName ).formInfo).length > 0
+        Object.keys(props.state.commonState.find(guest => guest.name.split(" ").join("") === urlName ).formInfo).length > 0
         ?
         <div>
           <div>
-            <p>phone</p><span>delete</span>
+            <label>phone</label><span>delete</span>
           </div>
-          <Rate count={props.state.commonState.find(guest => guest.name === urlName).rating}/>
+          <div>
+            {props.state.commonState.find(guest => guest.name.split(" ").join("") === urlName ).phone}
+          </div>
+          <Rate count={props.state.commonState.find(guest => guest.name.split(" ").join("") === urlName).rating}/>
+          <div>
+            <label>comment</label>
+          </div>
+          <div>
+          {props.state.commonState.find(guest => guest.name.split(" ").join("") === urlName ).feedback}
+          </div>
         </div>
         :
         <form onSubmit={formik.handleSubmit}>
@@ -47,7 +56,7 @@ const FeedbackForm = (props) => {
           <Rate ref={starRatingRef} id="rating" name="rating" onChange={formik.handleChange} value={formik.values.rating}/>
           <label>phone</label>
           <input ref={phoneRef} onChange={formik.handleChange} value={formik.values.phone} id="phone" name="phone" />
-          <label>phone</label>
+          <label>comment</label>
           <textarea ref={feedbackTextRef} onChange={formik.handleChange} value={formik.values.feedback} id="feedback" name="feedback" placeholder="your feedback" />
           <button type="submit">{buttonInnerText}</button>
         </form>

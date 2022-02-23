@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import GuestsList from './GuestsList';
 import { getGuestsData, getDietData, getCommonStateData } from './redux/appReducer'
-import {Suspense, Routes, Route} from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import FeedbackForm from './FeedbackForm';
 
-const App = ({state}) => {
+//const GuestsList = React.lazy(() => import('./GuestsList'))
+//const FeedbackForm = React.lazy(() => import('./FeedbackForm'))
+
+const App = ({ state }) => {
 
   useEffect(() => {
     if (state.party.length === 0) {
@@ -22,16 +25,11 @@ const App = ({state}) => {
 
   return (
     <div className="App">
-      {state.isFetched ? "LOADING"
-        : 
-        <Suspense fallback={"LOADING"}>
-              <Routes>
-                <Route path='/*' element={<GuestsList state={state} />}>
-                  <Route path={`:userId`} element={<FeedbackForm state={state}/>}/>
-                </Route>
-              </Routes>
-            </Suspense>
-        }
+        <Routes>
+          <Route path='' element={<GuestsList state={state} />}>
+            <Route path={`:urlName`} element={<FeedbackForm state={state} />} />
+          </Route>
+        </Routes>
     </div>
   );
 }
